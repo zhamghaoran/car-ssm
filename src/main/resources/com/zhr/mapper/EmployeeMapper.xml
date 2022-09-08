@@ -7,6 +7,15 @@
         select * from t_emp
     </select>
     <insert id="add">
-        insert into t_emp values (null,#{empName},#{age},#{sex},#{eamil})
+        insert into t_emp values (null,#{empName},#{age},#{sex},#{email})
     </insert>
+    <delete id="delete">
+        delete from t_emp where emp_id = #{id}
+    </delete>
+    <select id="getAll" resultType="Employee">
+        select * from t_emp
+    </select>
+    <select id="select" resultType="Employee">
+        select * from t_emp where emp_id = #{id}
+    </select>
 </mapper>

@@ -1,4 +1,4 @@
-package com.zhr;
+package com.zhr.pojo;
 
 
 public class Employee {
