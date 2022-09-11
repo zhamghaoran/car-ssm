@@ -1,7 +1,8 @@
 package com.zhr.utils.common.secure;
 
-import com.chenerzhu.common.common.EncType;
-import com.chenerzhu.common.util.CoderUtil;
+import com.zhr.*;
+import com.zhr.utils.common.common.EncType;
+import com.zhr.utils.common.util.CoderUtil;
 
 import java.util.regex.Pattern;
 

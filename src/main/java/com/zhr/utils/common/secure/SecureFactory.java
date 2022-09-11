@@ -1,7 +1,8 @@
 package com.zhr.utils.common.secure;
 
 
-import com.chenerzhu.common.common.SecureType;
+import com.zhr.*;
+import com.zhr.utils.common.common.SecureType;
 
 import java.security.NoSuchAlgorithmException;
 
