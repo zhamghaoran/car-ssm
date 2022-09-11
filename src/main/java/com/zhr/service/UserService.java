@@ -5,4 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserService {
     boolean login(String username, String password);
+
+    boolean checkUser(String username, String password);
+
+    void register(String username,String password);
+
 }

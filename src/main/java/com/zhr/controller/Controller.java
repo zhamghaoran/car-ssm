@@ -1,7 +1,6 @@
 package com.zhr.controller;
 
 import com.zhr.mapper.UserMapper;
-import com.zhr.pojo.User;
 import com.zhr.service.UserService;
 import com.zhr.utils.getToken;
 import com.zhr.utils.response;
@@ -10,20 +9,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 public class Controller {
     Map<String,String> tokenMap = new HashMap<>();
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private UserService userService;
     @RequestMapping("/register")
     public response register(String username,String password) {
-        User user = userMapper.checkUser(username, password);
         response response;
-        if (user == null) {
+        if (userService.checkUser(username, password)) {
             //System.out.println(userMapper.register(username, password));
             response = new response("200", "注册成功", null);
         }else {
@@ -44,8 +39,8 @@ public class Controller {
             Map<String ,String > map = new HashMap<>();
             message = "登录成功";
             map.put("token",token);
+            tokenMap.put(token,username);
             return new response(status,message,map);
         }
     }
-
 }
