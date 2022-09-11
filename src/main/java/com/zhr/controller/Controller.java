@@ -1,6 +1,5 @@
 package com.zhr.controller;
 
-import com.zhr.mapper.UserMapper;
 import com.zhr.service.UserService;
 import com.zhr.utils.getToken;
 import com.zhr.utils.response;

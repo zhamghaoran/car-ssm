@@ -1,19 +1,16 @@
 package com.zhr.utils.common.util;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.util.Arrays;
+import java.util.Base64;
 
 import java.io.IOException;
 
 public final class CoderUtil {
 
-    private static BASE64Encoder base64Encoder;
-    private static BASE64Decoder base64Decoder;
-
-    static {
-        base64Encoder = new BASE64Encoder();
-        base64Decoder = new BASE64Decoder();
-    }
+//    private static BASE64Encoder base64Encoder;
+//    private static BASE64Decoder base64Decoder;
+static Base64.Decoder base64Decoder = Base64.getDecoder();
+    static Base64.Encoder base64Encoder = Base64.getEncoder();
 
     /**
      * base64 编码
@@ -22,7 +19,7 @@ public final class CoderUtil {
      * @return
      */
     public static String encodeBase64(byte[] data) {
-        return base64Encoder.encodeBuffer(data);
+        return Arrays.toString(base64Encoder.encode(data));
     }
 
     /**
@@ -33,7 +30,7 @@ public final class CoderUtil {
      * @throws IOException
      */
     public static byte[] decodeBase64(String data) throws IOException {
-        return base64Decoder.decodeBuffer(data);
+        return base64Decoder.decode(data);
     }
 
     /**
