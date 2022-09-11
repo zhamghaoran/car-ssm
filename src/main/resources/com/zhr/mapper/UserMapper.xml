@@ -13,4 +13,7 @@
     <insert id="register">
         insert into user values (#{username},#{password},0,0,0)
     </insert>
+    <update id="charge">
+        update user set money = #{number} where username = #{username}
+    </update>
 </mapper>

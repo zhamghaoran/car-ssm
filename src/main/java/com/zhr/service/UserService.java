@@ -12,4 +12,5 @@ public interface UserService {
 
     User findUser(String username);
 
+    Integer recharge(String username,Integer number);
 }

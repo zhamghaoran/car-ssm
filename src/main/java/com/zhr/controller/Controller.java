@@ -63,4 +63,17 @@ public class Controller {
         }
         return response;
     }
+    @RequestMapping("/recharge")
+    public response recharge(String token ,Integer money) {
+        String status = "20";
+        String message = "";
+        String username = tokenMap.get(token);
+        if (username == null) {
+            message = "错误";
+            return new response(status, message, null);
+        }else
+            userService.recharge(username,money);
+        message = "充值成功";
+        return new response(status, message, null);
+    }
 }

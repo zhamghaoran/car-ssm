@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
     public User findUser(String username) {
         return userMapper.checkUser(username,null);
     }
+
+    @Override
+    public Integer recharge(String username, Integer number) {
+        return userMapper.charge(username, number);
+    }
 }
