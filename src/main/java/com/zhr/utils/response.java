@@ -1,25 +1,26 @@
 package com.zhr.utils;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class response {
     public String status;
     public String message;
-    public Map<String ,String > map;
+    public Map<String , String> detail;
 
     @Override
     public String toString() {
         return "response{" +
                 "status='" + status + '\'' +
                 ", reason='" + message + '\'' +
-                ", map=" + map +
+                ", map=" + detail +
                 '}';
     }
 
     public response(String status, String reason, Map<String, String> map) {
         this.status = status;
         this.message = reason;
-        this.map = map;
+        this.detail = map;
     }
 
     public String getStatus() {
@@ -38,11 +39,11 @@ public class response {
         this.message = message;
     }
 
-    public Map<String, String> getMap() {
-        return map;
+    public Map<String, String> getDetail() {
+        return detail;
     }
 
-    public void setMap(Map<String, String> map) {
-        this.map = map;
+    public void setDetail(Map<String, String> detail) {
+        this.detail = detail;
     }
 }

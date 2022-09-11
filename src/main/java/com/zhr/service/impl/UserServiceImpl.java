@@ -24,12 +24,17 @@ public class UserServiceImpl implements UserService {
     public boolean checkUser(String username, String password) {
 
         User user = userMapper.checkUser(username, password);
-        return user != null;
+        return user == null;
     }
 
     @Override
     public void register(String username, String password) {
         String passwordMd5 = SecureUtils.getMD5(password);
         userMapper.register(username, passwordMd5);
+    }
+
+    @Override
+    public User findUser(String username) {
+        return userMapper.checkUser(username,null);
     }
 }

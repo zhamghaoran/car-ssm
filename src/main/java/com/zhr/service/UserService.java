@@ -10,4 +10,6 @@ public interface UserService {
 
     void register(String username,String password);
 
+    User findUser(String username);
+
 }
