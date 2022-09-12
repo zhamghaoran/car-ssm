@@ -18,7 +18,7 @@ public class CarController {
     @RequestMapping("/car/carlist")
     public response getCarList() {
         String status = "200";
-        String message = "";
+        String message = "OK";
         List<Car> carList = carService.getCarList();
         HashMap<String , List<Car>> carMap = new HashMap<>();
         carMap.put("CarList",carList);

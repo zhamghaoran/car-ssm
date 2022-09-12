@@ -79,8 +79,19 @@ public class UserController {
             return new response().easyReturn("错误");
         }
         User user = userService.findUser(username);
-        String s = userService.rentCar(user, carId);
-        return new response().easyReturn(s);
+        String message = userService.rentCar(user, carId);
+        return new response().easyReturn(message);
+    }
+    @RequestMapping("/return/car")
+    public response ReturnCar(String token ,Integer carId) {
+        String username = tokenMap.get(token);
+        if( username == null) {
+            return new response().easyReturn("token错误");
+        }
+        User user = userService.findUser(username);
+        String message = userService.returnCar(user, carId);
+        return new response().easyReturn(message);
+
     }
 
 }

@@ -15,4 +15,6 @@ public interface UserMapper {
 
     Integer rent(@Param("username") String username,@Param("carId") Integer carId,@Param("money") Integer money);
 
+    Integer ReturnCar(@Param("username") String username);
+
 }

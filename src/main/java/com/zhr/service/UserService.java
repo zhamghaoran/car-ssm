@@ -14,4 +14,6 @@ public interface UserService {
     Integer recharge(String username,Integer number);
 
     String rentCar(User user,Integer carId);
+
+    String returnCar(User user,Integer carId);
 }

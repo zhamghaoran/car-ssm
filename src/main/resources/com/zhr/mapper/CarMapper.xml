@@ -9,5 +9,11 @@
     <select id="getCar" resultType="Car">
         select * from car where car_id = #{id}
     </select>
+    <update id="rentCar" >
+        update car set rentOrNot = 1 where car_id = #{carId}
+    </update>
+    <update id="returnCar">
+        update car set rentOrNot = 0 where car_id = #{carId}
+    </update>
 
 </mapper>

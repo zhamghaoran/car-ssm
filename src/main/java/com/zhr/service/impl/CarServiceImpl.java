@@ -13,6 +13,7 @@ public class CarServiceImpl implements CarService {
     private CarMapper carMapper;
     @Override
     public List<Car> getCarList() {
-        return null;
+        List<Car> carList = carMapper.getCarList();
+        return carList;
     }
 }

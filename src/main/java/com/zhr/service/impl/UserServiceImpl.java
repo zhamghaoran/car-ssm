@@ -4,7 +4,6 @@ import com.zhr.mapper.CarMapper;
 import com.zhr.mapper.UserMapper;
 import com.zhr.pojo.Car;
 import com.zhr.pojo.User;
-import com.zhr.service.CarService;
 import com.zhr.service.UserService;
 import com.zhr.utils.common.util.SecureUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(String username, String password) {
-        User user = userMapper.login(username, password);
-        return user != null;
+        User user = userMapper.login(username, SecureUtils.getMD5(password));
+        return user == null;
     }
 
     @Override
@@ -56,7 +55,22 @@ public class UserServiceImpl implements UserService {
         if (user.getMoney() < car.getPrice()) {
             return "余额不足";
         }
-        userMapper.rent(user.getUsername(),carId,user.getMoney());
+        if (car.isRentOrNot()) {
+            return "该车辆已出租";
+        }
+        userMapper.rent(user.getUsername(),carId,car.getPrice());
+        carMapper.rentCar(carId);
         return "租借成功";
+    }
+
+    @Override
+    public String returnCar(User user, Integer carId) {
+        Car car = carMapper.getCar(carId);
+        if (!car.isRentOrNot()) {
+            return "car_Id错误";
+        }
+        carMapper.returnCar(carId);
+        userMapper.ReturnCar(user.getUsername());
+        return "还车成功";
     }
 }

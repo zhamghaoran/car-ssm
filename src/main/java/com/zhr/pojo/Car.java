@@ -1,7 +1,7 @@
 package com.zhr.pojo;
 
 public class Car {
-    private Integer id;
+    private Integer carId;
     private String bread;
     private Integer price;
     private boolean rentOrNot;
@@ -12,7 +12,7 @@ public class Car {
     }
 
     public Car(Integer id, String bread, Integer price, boolean rentOrNot, String licensePlate, String model) {
-        this.id = id;
+        this.carId = id;
         this.bread = bread;
         this.price = price;
         this.rentOrNot = rentOrNot;
@@ -20,18 +20,18 @@ public class Car {
         this.model = model;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCarId() {
+        return carId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCarId(Integer carId) {
+        this.carId = carId;
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "id=" + id +
+                "id=" + carId +
                 ", bread='" + bread + '\'' +
                 ", price=" + price +
                 ", rentOrNot=" + rentOrNot +
