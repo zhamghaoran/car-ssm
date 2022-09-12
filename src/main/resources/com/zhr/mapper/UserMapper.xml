@@ -16,4 +16,9 @@
     <update id="charge">
         update user set money = #{number} where username = #{username}
     </update>
+    <update id="rent">
+        update user set money = money - #{money},
+                    carRent = carRent + 1
+                    where username = #{username}
+    </update>
 </mapper>

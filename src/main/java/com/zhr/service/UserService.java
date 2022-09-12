@@ -1,7 +1,6 @@
 package com.zhr.service;
 
 import com.zhr.pojo.User;
-import org.apache.ibatis.annotations.Param;
 
 public interface UserService {
     boolean login(String username, String password);
@@ -13,4 +12,6 @@ public interface UserService {
     User findUser(String username);
 
     Integer recharge(String username,Integer number);
+
+    String rentCar(User user,Integer carId);
 }

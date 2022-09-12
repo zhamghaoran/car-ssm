@@ -13,4 +13,6 @@ public interface UserMapper {
 
     Integer charge(@Param("username") String username,@Param("number") Integer number);
 
+    Integer rent(@Param("username") String username,@Param("carId") Integer carId,@Param("money") Integer money);
+
 }

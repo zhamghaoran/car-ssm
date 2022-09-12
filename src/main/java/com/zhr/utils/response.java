@@ -1,13 +1,24 @@
 package com.zhr.utils;
 
+import jdk.javadoc.internal.doclets.toolkit.MemberWriter;
+
 import java.util.Map;
-import java.util.Objects;
 
 public class response {
     public String status;
     public String message;
-    public Map<String , String> detail;
+    public Map<String , ?> detail;
 
+    public response() {
+    }
+
+    public response error(String message) {
+        response response = new response();
+        response.detail = null;
+        response.message = message;
+        response.status = "200";
+        return response;
+    }
     @Override
     public String toString() {
         return "response{" +
@@ -17,7 +28,7 @@ public class response {
                 '}';
     }
 
-    public response(String status, String reason, Map<String, String> map) {
+    public response(String status, String reason, Map<String, ?> map) {
         this.status = status;
         this.message = reason;
         this.detail = map;
@@ -39,7 +50,7 @@ public class response {
         this.message = message;
     }
 
-    public Map<String, String> getDetail() {
+    public Map<String, ?> getDetail() {
         return detail;
     }
 

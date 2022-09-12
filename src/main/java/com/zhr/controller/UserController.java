@@ -1,5 +1,6 @@
 package com.zhr.controller;
 
+import com.zhr.mapper.UserMapper;
 import com.zhr.pojo.User;
 import com.zhr.service.UserService;
 import com.zhr.utils.getToken;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class Controller {
+public class UserController {
     Map<String,String> tokenMap = new HashMap<>();
     @Autowired
     private UserService userService;
@@ -76,4 +77,15 @@ public class Controller {
         message = "充值成功";
         return new response(status, message, null);
     }
+    @RequestMapping("/rent/car")
+    public response RentCar(String token,Integer carId) {
+        String username = tokenMap.get(token);
+        if (username == null) {
+            return new response().error("错误");
+        }
+        User user = userService.findUser(username);
+        String s = userService.rentCar(user, carId);
+        return new response().error(s);
+    }
+
 }
