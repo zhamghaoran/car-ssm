@@ -1,6 +1,5 @@
 package com.zhr.controller;
 
-import com.zhr.mapper.UserMapper;
 import com.zhr.pojo.User;
 import com.zhr.service.UserService;
 import com.zhr.utils.getToken;
@@ -18,22 +17,20 @@ public class UserController {
     private UserService userService;
     @RequestMapping("/register")
     public response register(String username,String password) {
-        response response;
+
         if (userService.checkUser(username, password)) {
             userService.register(username,password);
-            response = new response("200", "注册成功", null);
+            return new response().easyReturn("已注册");
         }else {
-            response = new response("200","已注册" , null);
+            return new response().easyReturn("注册成功");
         }
-        return response;
     }
     @RequestMapping("/login")
     public response login(String username,String password) {
         String status = "200";
         String message;
         if (userService.login(username, password)) {
-            message = "登录失败";
-            return new response(status,message,null);
+            return new response().easyReturn("登录失败");
         } else {
             String token = new getToken(username, password).Token();
             Map<String ,String > map = new HashMap<>();
@@ -50,7 +47,7 @@ public class UserController {
         String username = tokenMap.get(token);
         response response = new response(status, message, null);
         if (username == null) {
-            message = "错误";
+            return new response().easyReturn("错误");
         }
         else {
             User user = userService.findUser(username);
@@ -70,22 +67,20 @@ public class UserController {
         String message = "";
         String username = tokenMap.get(token);
         if (username == null) {
-            message = "错误";
-            return new response(status, message, null);
+            return new response().easyReturn("错误");
         }else
             userService.recharge(username,money);
-        message = "充值成功";
-        return new response(status, message, null);
+        return new response().easyReturn("充值成功");
     }
     @RequestMapping("/rent/car")
     public response RentCar(String token,Integer carId) {
         String username = tokenMap.get(token);
         if (username == null) {
-            return new response().error("错误");
+            return new response().easyReturn("错误");
         }
         User user = userService.findUser(username);
         String s = userService.rentCar(user, carId);
-        return new response().error(s);
+        return new response().easyReturn(s);
     }
 
 }

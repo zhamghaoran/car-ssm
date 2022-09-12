@@ -1,7 +1,5 @@
 package com.zhr.utils;
 
-import jdk.javadoc.internal.doclets.toolkit.MemberWriter;
-
 import java.util.Map;
 
 public class response {
@@ -12,7 +10,7 @@ public class response {
     public response() {
     }
 
-    public response error(String message) {
+    public response easyReturn(String message) {
         response response = new response();
         response.detail = null;
         response.message = message;
