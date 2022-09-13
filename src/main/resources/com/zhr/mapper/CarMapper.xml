@@ -4,16 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhr.mapper.CarMapper">
     <select id="getCarList" resultType="Car">
-        select * from car
+        select *
+        from car
     </select>
     <select id="getCar" resultType="Car">
-        select * from car where car_id = #{id}
+        select *
+        from car
+        where car_id = #{id}
     </select>
-    <update id="rentCar" >
-        update car set rentOrNot = 1 where car_id = #{carId}
+    <update id="rentCar">
+        update car
+        set rentOrNot = 1,
+            rentTime  = #{date}
+        where car_id = #{carId}
     </update>
     <update id="returnCar">
-        update car set rentOrNot = 0 where car_id = #{carId}
+        update car
+        set rentOrNot = 0,
+            rentTime = null
+        where car_id = #{carId}
     </update>
 
 </mapper>

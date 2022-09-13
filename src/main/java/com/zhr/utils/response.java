@@ -52,7 +52,7 @@ public class response {
         return detail;
     }
 
-    public void setDetail(Map<String, String> detail) {
+    public void setDetail(Map<String, ?> detail) {
         this.detail = detail;
     }
 }

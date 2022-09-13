@@ -3,6 +3,8 @@ package com.zhr.mapper;
 import com.zhr.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Date;
+
 
 public interface UserMapper {
     User login(@Param("username") String username,@Param("password") String password);
@@ -13,8 +15,8 @@ public interface UserMapper {
 
     Integer charge(@Param("username") String username,@Param("number") Integer number);
 
-    Integer rent(@Param("username") String username,@Param("carId") Integer carId,@Param("money") Integer money);
+    Integer rent(@Param("username") String username, @Param("carId") Integer carId);
 
-    Integer ReturnCar(@Param("username") String username);
+    Integer ReturnCar(@Param("username") String username,@Param("money") long money);
 
 }

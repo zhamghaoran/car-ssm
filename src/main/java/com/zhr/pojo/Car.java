@@ -1,5 +1,7 @@
 package com.zhr.pojo;
 
+import java.sql.Date;
+
 public class Car {
     private Integer carId;
     private String bread;
@@ -7,6 +9,44 @@ public class Car {
     private boolean rentOrNot;
     private String licensePlate;
     private String model;
+
+    private String rentTime;
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "carId=" + carId +
+                ", bread='" + bread + '\'' +
+                ", price=" + price +
+                ", rentOrNot=" + rentOrNot +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", model='" + model + '\'' +
+                ", rentTime=" + rentTime +
+                '}';
+    }
+
+    public Date RentTimeDate() {
+        if (rentTime == null)
+            return null;
+        return Date.valueOf(rentTime);
+    }
+    public String getRentTime() {
+        return rentTime;
+    }
+
+    public void setRentTime(Date rentTime) {
+        this.rentTime = rentTime.toString();
+    }
+
+    public Car(Integer carId, String bread, Integer price, boolean rentOrNot, String licensePlate, String model, Date rentTime) {
+        this.carId = carId;
+        this.bread = bread;
+        this.price = price;
+        this.rentOrNot = rentOrNot;
+        this.licensePlate = licensePlate;
+        this.model = model;
+        this.rentTime = rentTime.toString();
+    }
 
     public Car() {
     }
@@ -26,18 +66,6 @@ public class Car {
 
     public void setCarId(Integer carId) {
         this.carId = carId;
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + carId +
-                ", bread='" + bread + '\'' +
-                ", price=" + price +
-                ", rentOrNot=" + rentOrNot +
-                ", licensePlate='" + licensePlate + '\'' +
-                ", model='" + model + '\'' +
-                '}';
     }
 
     public String getBread() {

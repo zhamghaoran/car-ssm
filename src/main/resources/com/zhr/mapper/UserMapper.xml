@@ -4,24 +4,35 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhr.mapper.UserMapper">
     <select id="login" resultType="User">
-        select * from user where username = #{username} and password = #{password}
+        select *
+        from user
+        where username = #{username}
+          and password = #{password}
     </select>
     <select id="checkUser" resultType="User">
-        select * from user where username = #{username}
+        select *
+        from user
+        where username = #{username}
     </select>
 
     <insert id="register">
-        insert into user values (#{username},#{password},0,0,0)
+        insert into user
+        values (#{username}, #{password}, 0, 0, 0)
     </insert>
     <update id="charge">
-        update user set money = money + #{number} where username = #{username}
+        update user
+        set money = money + #{number}
+        where username = #{username}
     </update>
     <update id="rent">
-        update user set money = money - #{money},
-                    carRent = carRent + 1
-                    where username = #{username}
+        update user
+        set carRent = carRent + 1
+        where username = #{username}
     </update>
     <update id="ReturnCar">
-        update user set carRent = carRent - 1 where username = #{username}
+        update user
+        set carRent = carRent - 1,
+            money = money - #{money}
+        where username = #{username}
     </update>
 </mapper>

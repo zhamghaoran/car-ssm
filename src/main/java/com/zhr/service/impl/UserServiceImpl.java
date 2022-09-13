@@ -2,16 +2,23 @@ package com.zhr.service.impl;
 
 import com.zhr.mapper.CarMapper;
 import com.zhr.mapper.UserMapper;
+import com.zhr.mapper.rentRelationMapper;
 import com.zhr.pojo.Car;
+import com.zhr.pojo.RentRelation;
 import com.zhr.pojo.User;
 import com.zhr.service.UserService;
 import com.zhr.utils.common.util.SecureUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private rentRelationMapper rentRelationMapper;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -48,18 +55,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String rentCar(User user, Integer carId) {
+
         Car car = carMapper.getCar(carId);
         if (car == null) {
             return "car_id错误";
         }
-        if (user.getMoney() < car.getPrice()) {
-            return "余额不足";
-        }
         if (car.isRentOrNot()) {
             return "该车辆已出租";
         }
-        userMapper.rent(user.getUsername(),carId,car.getPrice());
-        carMapper.rentCar(carId);
+        Date date = new Date(System.currentTimeMillis());
+        userMapper.rent(user.getUsername(),carId);
+        carMapper.rentCar(carId,date);
+        rentRelationMapper.Insert(user.getUsername(),"Car",carId);
         return "租借成功";
     }
 
@@ -69,8 +76,22 @@ public class UserServiceImpl implements UserService {
         if (!car.isRentOrNot()) {
             return "car_Id错误";
         }
+        Date date = new Date(System.currentTimeMillis());
+        Date rentTime = car.RentTimeDate();
+        long l = date.getTime() - rentTime.getTime();
+        long nd = 1000 * 24 * 60 * 60;
+        long day =  l / nd;
+        if (user.getMoney() < (day) * car.getPrice()) {
+            return "余额不足";
+        }
         carMapper.returnCar(carId);
-        userMapper.ReturnCar(user.getUsername());
+        userMapper.ReturnCar(user.getUsername(),Math.max(0,day) * car.getPrice());
+        rentRelationMapper.Delete(user.getUsername(),"Car",carId);
         return "还车成功";
+    }
+
+    @Override
+    public List<RentRelation> getRentCar(String username) {
+        return rentRelationMapper.selectRentListByUsername(username);
     }
 }

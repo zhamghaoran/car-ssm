@@ -1,5 +1,6 @@
 package com.zhr.controller;
 
+import com.zhr.pojo.RentRelation;
 import com.zhr.pojo.User;
 import com.zhr.service.UserService;
 import com.zhr.utils.getToken;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,20 +53,14 @@ public class UserController {
         }
         else {
             User user = userService.findUser(username);
-            message = "";
-            Map<String, String> map = new HashMap<>();
-            map.put("Username",user.getUsername());
-            map.put("CarRent", String.valueOf(user.getCarRent()));
-            map.put("Money", String.valueOf(user.getMoney()));
-            map.put("TruckRent", String.valueOf(user.getTruckRent()));
+            Map<String, User> map = new HashMap<>();
+            map.put("User",user);
             response.setDetail(map);
         }
         return response;
     }
     @RequestMapping("/recharge")
     public response recharge(String token ,Integer money) {
-        String status = "20";
-        String message = "";
         String username = tokenMap.get(token);
         if (username == null) {
             return new response().easyReturn("错误");
@@ -91,7 +87,16 @@ public class UserController {
         User user = userService.findUser(username);
         String message = userService.returnCar(user, carId);
         return new response().easyReturn(message);
+    }
 
+    @RequestMapping("/get/rent/car")
+    public response getRentCar(String Token) {
+        String username = tokenMap.get(Token);
+        if (username == null)
+            return new response().easyReturn("token错误");
+        List<RentRelation> rentCar = userService.getRentCar(username);
+        Map<String ,List<RentRelation>> rent = new HashMap<>();
+        return new response("200", "成功", rent);
     }
 
 }
