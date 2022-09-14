@@ -96,6 +96,7 @@ public class UserController {
             return new response().easyReturn("token错误");
         List<RentRelation> rentCar = userService.getRentCar(username);
         Map<String ,List<RentRelation>> rent = new HashMap<>();
+        rent.put("List",rentCar);
         return new response("200", "成功", rent);
     }
 

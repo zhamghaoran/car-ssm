@@ -3,14 +3,14 @@ package com.zhr.pojo;
 import java.sql.Date;
 
 public class Car {
-    private Integer carId;
-    private String bread;
-    private Integer price;
-    private boolean rentOrNot;
-    private String licensePlate;
-    private String model;
+    public Integer carId;
+    public String bread;
+    public Integer price;
+    public boolean rentOrNot;
+    public String licensePlate;
+    public String model;
 
-    private String rentTime;
+    public String rentTime;
 
     @Override
     public String toString() {
@@ -37,6 +37,7 @@ public class Car {
     public void setRentTime(Date rentTime) {
         this.rentTime = rentTime.toString();
     }
+
 
     public Car(Integer carId, String bread, Integer price, boolean rentOrNot, String licensePlate, String model, Date rentTime) {
         this.carId = carId;

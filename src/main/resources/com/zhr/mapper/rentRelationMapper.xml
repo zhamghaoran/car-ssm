@@ -7,15 +7,37 @@
         select *
         from rentrelation;
     </select>
-    <select id="selectRentListByUsername" resultType="RentRelation">
+    <resultMap id="RentList" type="com.zhr.pojo.RentRelation">
+        <result column="username" property="username"/>
+        <result column="carType" property="CarType"/>
+        <result column="carId" property="id"/>
+<!--        <result column="car_id" property="car.carId"/>-->
+<!--        <result column="bread" property="car.bread"/>-->
+<!--        <result column="price" property="car.price"/>-->
+<!--        <result column="rentOrNot" property="car.rentOrNot"/>-->
+<!--        <result column="licensePlate" property="car.licensePlate"/>-->
+<!--        <result column="model" property="car.model"/>-->
+<!--        <result column="rentTime" property="car.rentTime"/>-->
+        <association property="car" javaType="com.zhr.pojo.Car">
+            <result column="car_id" property="carId"/>
+            <result column="bread" property="bread"/>
+            <result column="price" property="price"/>
+            <result column="rentOrNot" property="rentOrNot"/>
+            <result column="licensePlate" property="licensePlate"/>
+            <result column="model" property="model"/>
+            <result column="rentTime" property="rentTime"/>
+        </association>
+    </resultMap>
+    <select id="selectRentListByUsername" resultMap="RentList">
         select *
-        from rentrelation
-        where username = #{username}
+        from rentrelation ,car where rentrelation.carId = car.car_id
+
+
     </select>
     <insert id="Insert">
         insert into rentrelation values (#{username},#{carType},#{car_id})
     </insert>
     <delete id="Delete">
-        delete from rentrelation where username = #{username} and car_type = #{carType} and car_id = #{car_id}
+        delete from rentrelation where username = #{username} and car_type = #{carType} and carId = #{car_id}
     </delete>
 </mapper>

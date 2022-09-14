@@ -1,18 +1,41 @@
 package com.zhr.pojo;
 
 
+import java.sql.Date;
+
 public class RentRelation {
     private String username;
     private String carType;
-    private Integer car_id;
+    private Integer id;
+
+    private Car car;
+    public RentRelation(){}
 
     @Override
     public String toString() {
         return "RentRelation{" +
                 "username='" + username + '\'' +
                 ", carType='" + carType + '\'' +
-                ", car_id=" + car_id +
+                ", car_id=" + id +
+                ", car=" + car +
                 '}';
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    // Integer car_id, Integer carId, String bread, Integer price, boolean rentOrNot, String licensePlate, String model, Date rentTime
+    public RentRelation(String username, String carType,Integer car_id, Car car) {
+        this.username = username;
+        this.carType = carType;
+        this.id = car_id;
+        this.car = car;
+        //this.car = car;
     }
 
     public String getUsername() {
@@ -31,17 +54,11 @@ public class RentRelation {
         this.carType = carType;
     }
 
-    public Integer getCar_id() {
-        return car_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCar_id(Integer car_id) {
-        this.car_id = car_id;
-    }
-
-    public RentRelation(String username, String carType, Integer car_id) {
-        this.username = username;
-        this.carType = carType;
-        this.car_id = car_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
