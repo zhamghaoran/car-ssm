@@ -3,7 +3,8 @@ package com.zhr.controller;
 import com.zhr.pojo.RentRelation;
 import com.zhr.pojo.User;
 import com.zhr.service.UserService;
-import com.zhr.utils.getToken;
+import com.zhr.utils.Redis;
+
 import com.zhr.utils.response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,9 @@ public class UserController {
     Map<String,String> tokenMap = new HashMap<>();
     @Autowired
     private UserService userService;
+    Redis redis = new Redis();
     @RequestMapping("/register")
     public response register(String username,String password) {
-
         if (userService.checkUser(username, password)) {
             userService.register(username,password);
             return new response().easyReturn("已注册");
@@ -30,30 +31,32 @@ public class UserController {
     @RequestMapping("/login")
     public response login(String username,String password) {
         String status = "200";
-        String message;
+        String message = "";
         if (userService.login(username, password)) {
             return new response().easyReturn("登录失败");
         } else {
-            String token = new getToken(username, password).Token();
+            String token = redis.setUsername(username,password);
             Map<String ,String > map = new HashMap<>();
             message = "登录成功";
             map.put("token",token);
             tokenMap.put(token,username);
             return new response(status,message,map);
+
         }
     }
     @RequestMapping("/personal/center")
     public response personalCenter(String token) {
         String status = "200";
         String message = "";
-        String username = tokenMap.get(token);
+        String username = redis.getUsername(token);
         response response = new response(status, message, null);
-        if (username == null) {
+        if (username.equals("")) {
             return new response().easyReturn("错误");
         }
         else {
             User user = userService.findUser(username);
             Map<String, User> map = new HashMap<>();
+            user.setPassword("");
             map.put("User",user);
             response.setDetail(map);
         }
@@ -61,8 +64,8 @@ public class UserController {
     }
     @RequestMapping("/recharge")
     public response recharge(String token ,Integer money) {
-        String username = tokenMap.get(token);
-        if (username == null) {
+        String username = redis.getUsername(token);
+        if (username.equals("")) {
             return new response().easyReturn("错误");
         }else
             userService.recharge(username,money);
@@ -70,8 +73,8 @@ public class UserController {
     }
     @RequestMapping("/rent/car")
     public response RentCar(String token,Integer carId) {
-        String username = tokenMap.get(token);
-        if (username == null) {
+        String username = redis.getUsername(token);
+        if (username.equals("")) {
             return new response().easyReturn("错误");
         }
         User user = userService.findUser(username);
@@ -80,8 +83,8 @@ public class UserController {
     }
     @RequestMapping("/return/car")
     public response ReturnCar(String token ,Integer carId) {
-        String username = tokenMap.get(token);
-        if( username == null) {
+        String username = redis.getUsername(token);
+        if( username.equals("")) {
             return new response().easyReturn("token错误");
         }
         User user = userService.findUser(username);
@@ -91,13 +94,12 @@ public class UserController {
 
     @RequestMapping("/get/rent/car")
     public response getRentCar(String Token) {
-        String username = tokenMap.get(Token);
-        if (username == null)
+        String username = redis.getUsername(Token);
+        if (username.equals(""))
             return new response().easyReturn("token错误");
         List<RentRelation> rentCar = userService.getRentCar(username);
         Map<String ,List<RentRelation>> rent = new HashMap<>();
         rent.put("List",rentCar);
         return new response("200", "成功", rent);
     }
-
 }
